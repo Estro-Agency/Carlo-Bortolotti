@@ -32,6 +32,11 @@
       overflow-x: hidden;
     }
 
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); }
+
     /* ─── NAV ─── */
     nav {
       position: fixed;
@@ -40,12 +45,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 5vw;
-      background: rgba(18,16,13,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(213,220,220,0.08);
+      padding: 1.4rem 5vw;
+      transition: padding .35s, background .35s, box-shadow .35s;
     }
-    nav .logo img { height: 38px; display: block; }
+    nav.scrolled {
+      padding: .9rem 5vw;
+      background: rgba(18,16,13,.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(213,220,220,.07);
+    }
+    nav .logo img { height: 36px; display: block; transition: height .35s; }
+    nav.scrolled .logo img { height: 30px; }
     nav ul {
       display: flex;
       gap: 2.5rem;
@@ -54,22 +64,32 @@
     nav ul a {
       color: var(--platinum);
       text-decoration: none;
-      font-size: .85rem;
-      font-weight: 400;
-      letter-spacing: .12em;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .14em;
       text-transform: uppercase;
       transition: color .25s;
+      position: relative;
     }
-    nav ul a:hover { color: var(--orange); }
+    nav ul a:not(.nav-cta)::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+    nav ul a:not(.nav-cta):hover::after { transform: scaleX(1); }
+    nav ul a:hover { color: var(--white); }
     .nav-cta {
       background: var(--orange);
       color: #fff !important;
       padding: .55rem 1.4rem;
-      font-weight: 700 !important;
-      letter-spacing: .12em;
-      transition: background .25s !important;
+      transition: background .25s, transform .2s !important;
     }
-    .nav-cta:hover { background: var(--chili) !important; color: #fff !important; }
+    .nav-cta:hover { background: var(--chili) !important; transform: translateY(-1px); }
 
     .burger {
       display: none;
@@ -86,6 +106,9 @@
       background: var(--white);
       transition: all .3s;
     }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* ─── HERO ─── */
     #hero {
@@ -93,121 +116,247 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 120px 5vw 80px;
+      padding: 140px 5vw 100px;
       position: relative;
       overflow: hidden;
     }
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #12100D 55%, #1e0e06 100%);
-      z-index: 0;
+      background: linear-gradient(135deg, #12100D 50%, #1c0d05 100%);
     }
+    /* Animated glow */
     .hero-glow {
       position: absolute;
-      width: 700px; height: 700px;
+      width: 800px; height: 800px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(236,102,8,.22) 0%, transparent 70%);
-      top: -150px; right: -150px;
+      background: radial-gradient(circle, rgba(236,102,8,.2) 0%, transparent 65%);
+      top: -200px; right: -200px;
+      animation: pulseGlow 6s ease-in-out infinite;
       pointer-events: none;
-      z-index: 0;
     }
+    @keyframes pulseGlow {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.12); opacity: .7; }
+    }
+    /* Diagonal lines */
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-lines::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: 15%;
+      width: 1px; height: 200%;
+      background: linear-gradient(180deg, transparent, rgba(236,102,8,.18), transparent);
+      transform: rotate(-15deg);
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      top: -50%; right: 22%;
+      width: 1px; height: 200%;
+      background: linear-gradient(180deg, transparent, rgba(236,102,8,.08), transparent);
+      transform: rotate(-15deg);
+    }
+    /* Orange ribbon */
     .hero-ribbon {
       position: absolute;
       right: 0; top: 0; bottom: 0;
-      width: 6px;
-      background: linear-gradient(180deg, var(--orange), var(--chili));
-      opacity: .7;
+      width: 5px;
+      background: linear-gradient(180deg, var(--orange) 0%, var(--chili) 100%);
     }
+    /* Dot grid */
     .hero-dots {
       position: absolute;
-      bottom: 60px; left: 5vw;
+      bottom: 80px; left: 5vw;
       display: grid;
-      grid-template-columns: repeat(8, 8px);
-      gap: 10px;
-      opacity: .12;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 12px;
+      opacity: .1;
       pointer-events: none;
     }
     .hero-dots span {
-      width: 4px; height: 4px;
+      width: 3px; height: 3px;
       border-radius: 50%;
       background: var(--platinum);
       display: block;
     }
-    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    /* Scale watermark */
+    .hero-watermark {
+      position: absolute;
+      right: 6vw; bottom: 6vh;
+      opacity: .04;
+      pointer-events: none;
+    }
+    .hero-watermark svg { width: 220px; }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+    }
     .hero-tag {
-      display: inline-block;
-      font-size: .72rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .7rem;
       font-weight: 700;
-      letter-spacing: .22em;
+      letter-spacing: .24em;
       text-transform: uppercase;
       color: var(--orange);
-      border: 1px solid var(--orange);
-      padding: .35rem .9rem;
-      margin-bottom: 2rem;
+      border: 1px solid rgba(236,102,8,.4);
+      padding: .35rem 1rem;
+      margin-bottom: 2.2rem;
+      animation: fadeUp .8s .1s both;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: .2; }
     }
     .hero-content h1 {
-      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-size: clamp(2.8rem, 6.5vw, 5.2rem);
       font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -.02em;
+      line-height: 1.04;
+      letter-spacing: -.03em;
       color: var(--white);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
+      animation: fadeUp .8s .2s both;
     }
     .hero-content h1 em {
       font-style: normal;
       color: var(--orange);
     }
     .hero-content p {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 300;
       color: var(--platinum);
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      animation: fadeUp .8s .3s both;
     }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp .8s .4s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      opacity: .35;
+      animation: fadeUp .8s .8s both;
+    }
+    .scroll-hint span {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--platinum);
+    }
+    .scroll-hint-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--platinum), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ─── BUTTONS ─── */
     .btn-primary {
       background: var(--orange);
       color: #fff;
       padding: .9rem 2.2rem;
       font-family: 'Lato', sans-serif;
-      font-size: .85rem;
+      font-size: .8rem;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: background .25s, transform .2s;
+      transition: background .25s, transform .2s, box-shadow .25s;
       display: inline-block;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-primary:hover { background: var(--chili); transform: translateY(-2px); }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.12);
+      transform: translateX(-101%);
+      transition: transform .35s;
+    }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .btn-primary:hover {
+      background: var(--chili);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(236,102,8,.3);
+    }
     .btn-secondary {
       background: transparent;
       color: var(--white);
       padding: .9rem 2.2rem;
       font-family: 'Lato', sans-serif;
-      font-size: .85rem;
+      font-size: .8rem;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid rgba(242,244,245,.35);
+      border: 1px solid rgba(242,244,245,.25);
       cursor: pointer;
-      transition: background .25s, color .25s, border-color .25s;
+      transition: background .25s, color .25s, border-color .25s, transform .2s;
       display: inline-block;
     }
     .btn-secondary:hover {
       background: var(--white);
       color: var(--black);
       border-color: var(--white);
+      transform: translateY(-2px);
     }
 
     /* ─── STATS BAR ─── */
     #stats {
       background: var(--orange);
-      padding: 1.8rem 5vw;
+      padding: 2rem 5vw;
+      position: relative;
+      overflow: hidden;
+    }
+    #stats::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(206,57,32,.35) 100%);
+      pointer-events: none;
     }
     .stats-inner {
       display: flex;
@@ -215,65 +364,77 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1.5rem;
+      position: relative;
     }
     .stat-item { text-align: center; }
     .stat-number {
       display: block;
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       font-weight: 900;
       color: #fff;
-      letter-spacing: -.03em;
+      letter-spacing: -.04em;
       line-height: 1;
     }
     .stat-label {
       display: block;
-      font-size: .72rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .16em;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.75);
-      margin-top: .3rem;
+      color: rgba(255,255,255,.7);
+      margin-top: .35rem;
     }
     .stat-sep {
-      width: 1px;
-      height: 40px;
-      background: rgba(255,255,255,.25);
+      width: 1px; height: 44px;
+      background: rgba(255,255,255,.2);
     }
 
     /* ─── SECTION BASE ─── */
-    section { padding: 100px 5vw; }
+    section { padding: 110px 5vw; }
     .section-tag {
-      font-size: .72rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .22em;
+      letter-spacing: .26em;
       text-transform: uppercase;
       color: var(--orange);
       display: block;
       margin-bottom: 1.2rem;
     }
     .section-title {
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(2rem, 4vw, 3.4rem);
       font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -.02em;
+      line-height: 1.08;
+      letter-spacing: -.025em;
       color: var(--white);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
     }
     .section-title em {
       font-style: normal;
       color: var(--orange);
     }
     .section-body {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 300;
       color: var(--platinum);
-      line-height: 1.8;
-      max-width: 600px;
+      line-height: 1.85;
+      max-width: 580px;
+      opacity: .85;
     }
     .divider {
-      width: 48px; height: 3px;
+      width: 44px; height: 3px;
       background: linear-gradient(90deg, var(--orange), var(--chili));
       margin: 1.5rem 0 2rem;
+    }
+
+    /* ─── REVEAL ANIMATION ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ─── PROBLEM ─── */
@@ -285,43 +446,48 @@
       margin-top: 4rem;
     }
     .problem-card {
-      background: rgba(242,244,245,.03);
-      border: 1px solid rgba(213,220,220,.08);
-      padding: 2.5rem;
+      background: rgba(242,244,245,.025);
+      border: 1px solid rgba(213,220,220,.07);
+      padding: 2.6rem;
       position: relative;
       overflow: hidden;
-      transition: background .3s;
+      transition: background .3s, transform .3s;
+      cursor: default;
     }
     .problem-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
       width: 3px; height: 0;
-      background: var(--orange);
-      transition: height .4s;
+      background: linear-gradient(180deg, var(--orange), var(--chili));
+      transition: height .45s cubic-bezier(.4,0,.2,1);
     }
     .problem-card:hover::before { height: 100%; }
-    .problem-card:hover { background: rgba(236,102,8,.04); }
+    .problem-card:hover {
+      background: rgba(236,102,8,.04);
+      transform: translateY(-2px);
+    }
     .problem-num {
-      font-size: .7rem;
+      font-size: .65rem;
       font-weight: 700;
-      letter-spacing: .2em;
+      letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--orange);
-      margin-bottom: .8rem;
+      margin-bottom: .9rem;
       display: block;
     }
     .problem-card h3 {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--white);
       margin-bottom: .6rem;
     }
     .problem-card p {
-      font-size: .9rem;
+      font-size: .88rem;
       font-weight: 300;
       color: var(--platinum);
-      line-height: 1.7;
+      line-height: 1.75;
+      opacity: .8;
     }
 
     /* ─── SOLUTION ─── */
@@ -332,11 +498,12 @@
     }
     .solution-glow {
       position: absolute;
-      width: 500px; height: 500px;
+      width: 600px; height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(206,57,32,.15) 0%, transparent 70%);
-      bottom: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(206,57,32,.12) 0%, transparent 70%);
+      bottom: -150px; left: -100px;
       pointer-events: none;
+      animation: pulseGlow 8s ease-in-out infinite;
     }
     .solution-layout {
       display: grid;
@@ -344,29 +511,38 @@
       gap: 6rem;
       align-items: center;
     }
-    .solution-visual {
-      position: relative;
-    }
     .solution-box {
-      background: linear-gradient(135deg, rgba(236,102,8,.12), rgba(206,57,32,.06));
-      border: 1px solid rgba(236,102,8,.2);
+      background: linear-gradient(135deg, rgba(236,102,8,.1), rgba(206,57,32,.05));
+      border: 1px solid rgba(236,102,8,.18);
       padding: 3rem;
       position: relative;
+      transition: border-color .3s;
     }
+    .solution-box:hover { border-color: rgba(236,102,8,.4); }
     .solution-box::after {
       content: '';
       position: absolute;
-      bottom: -16px; right: -16px;
+      bottom: -14px; right: -14px;
       width: 100%; height: 100%;
-      border: 1px solid rgba(236,102,8,.1);
+      border: 1px solid rgba(236,102,8,.08);
       pointer-events: none;
+      transition: border-color .3s;
+    }
+    .solution-box:hover::after { border-color: rgba(236,102,8,.18); }
+    .quote-mark {
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--orange);
+      opacity: .3;
+      font-family: Georgia, serif;
+      margin-bottom: -.5rem;
     }
     .solution-quote {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 300;
       font-style: italic;
       color: var(--white);
-      line-height: 1.6;
+      line-height: 1.65;
     }
     .solution-quote strong {
       font-style: normal;
@@ -374,27 +550,37 @@
       color: var(--orange);
     }
     .solution-author {
-      margin-top: 1.5rem;
-      font-size: .78rem;
+      margin-top: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .solution-author-line {
+      width: 24px; height: 1px;
+      background: var(--orange);
+    }
+    .solution-author span {
+      font-size: .72rem;
       font-weight: 700;
       letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--platinum);
-      opacity: .6;
+      opacity: .55;
     }
 
     /* ─── LEGAL AREAS ─── */
     #areas { background: #0e0c0a; }
     .areas-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
       margin-top: 4rem;
+      border: 1px solid rgba(213,220,220,.05);
     }
     .area-card {
       background: rgba(242,244,245,.02);
-      border: 1px solid rgba(213,220,220,.07);
-      padding: 2.2rem;
+      border: 1px solid rgba(213,220,220,.05);
+      padding: 2rem 1.8rem;
       transition: all .3s;
       cursor: default;
       position: relative;
@@ -408,28 +594,31 @@
       background: linear-gradient(90deg, var(--orange), var(--chili));
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform .35s;
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
     }
     .area-card:hover::after { transform: scaleX(1); }
-    .area-card:hover { background: rgba(236,102,8,.05); }
+    .area-card:hover {
+      background: rgba(236,102,8,.05);
+      transform: translateY(-3px);
+    }
     .area-icon {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       margin-bottom: 1rem;
       display: block;
     }
     .area-card h3 {
-      font-size: 1rem;
+      font-size: .9rem;
       font-weight: 700;
       color: var(--white);
-      margin-bottom: .6rem;
+      margin-bottom: .5rem;
       letter-spacing: .02em;
     }
     .area-card p {
-      font-size: .85rem;
+      font-size: .82rem;
       font-weight: 300;
       color: var(--platinum);
       line-height: 1.65;
-      opacity: .8;
+      opacity: .7;
     }
 
     /* ─── HOW IT WORKS ─── */
@@ -444,45 +633,48 @@
     .steps::before {
       content: '';
       position: absolute;
-      top: 28px; left: 12.5%;
-      right: 12.5%;
+      top: 27px; left: 12.5%; right: 12.5%;
       height: 1px;
-      background: linear-gradient(90deg, var(--orange), var(--chili), var(--orange));
-      opacity: .3;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--chili), var(--orange), transparent);
+      opacity: .25;
     }
     .step {
       padding: 0 1.5rem;
       text-align: center;
-      position: relative;
     }
     .step-num {
-      width: 56px; height: 56px;
+      width: 54px; height: 54px;
       border-radius: 50%;
-      border: 2px solid var(--orange);
+      border: 1px solid var(--orange);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: .9rem;
       font-weight: 900;
       color: var(--orange);
-      margin: 0 auto 1.5rem;
+      margin: 0 auto 1.6rem;
       background: var(--black);
       position: relative;
       z-index: 1;
+      transition: background .3s, color .3s;
+    }
+    .step:hover .step-num {
+      background: var(--orange);
+      color: #fff;
     }
     .step h3 {
-      font-size: .95rem;
+      font-size: .9rem;
       font-weight: 700;
       color: var(--white);
       margin-bottom: .6rem;
       letter-spacing: .02em;
     }
     .step p {
-      font-size: .83rem;
+      font-size: .82rem;
       font-weight: 300;
       color: var(--platinum);
-      line-height: 1.65;
-      opacity: .75;
+      line-height: 1.7;
+      opacity: .7;
     }
 
     /* ─── WHY AGILEX ─── */
@@ -493,12 +685,11 @@
     }
     .why-watermark {
       position: absolute;
-      right: 4vw;
-      top: 50%;
+      right: 2vw; top: 50%;
       transform: translateY(-50%);
-      font-size: 18vw;
+      font-size: clamp(8rem, 18vw, 18rem);
       font-weight: 900;
-      color: rgba(236,102,8,.04);
+      color: rgba(236,102,8,.035);
       letter-spacing: -.05em;
       pointer-events: none;
       user-select: none;
@@ -507,193 +698,229 @@
     .why-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1px;
+      gap: 0;
       margin-top: 4rem;
-      border: 1px solid rgba(213,220,220,.06);
     }
     .why-item {
-      padding: 2.5rem;
+      padding: 2.4rem;
       border: 1px solid rgba(213,220,220,.06);
       display: flex;
-      gap: 1.5rem;
+      gap: 1.4rem;
       align-items: flex-start;
       transition: background .3s;
     }
     .why-item:hover { background: rgba(236,102,8,.04); }
     .why-icon {
       flex-shrink: 0;
-      width: 44px; height: 44px;
-      background: rgba(236,102,8,.12);
-      border: 1px solid rgba(236,102,8,.25);
+      width: 42px; height: 42px;
+      background: rgba(236,102,8,.1);
+      border: 1px solid rgba(236,102,8,.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
+      transition: background .3s, border-color .3s;
+    }
+    .why-item:hover .why-icon {
+      background: rgba(236,102,8,.2);
+      border-color: rgba(236,102,8,.5);
     }
     .why-item h3 {
-      font-size: .95rem;
+      font-size: .92rem;
       font-weight: 700;
       color: var(--white);
       margin-bottom: .4rem;
       letter-spacing: .02em;
     }
     .why-item p {
-      font-size: .85rem;
+      font-size: .83rem;
       font-weight: 300;
       color: var(--platinum);
-      line-height: 1.65;
-      opacity: .75;
+      line-height: 1.7;
+      opacity: .72;
     }
 
     /* ─── TARGET ─── */
     #target { background: var(--black); }
     .target-cards {
       display: flex;
-      gap: 1.5rem;
+      gap: 1px;
       margin-top: 4rem;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
     }
     .target-card {
       flex: 1;
-      min-width: 200px;
-      border: 1px solid rgba(213,220,220,.08);
-      padding: 2rem 1.8rem;
+      border: 1px solid rgba(213,220,220,.07);
+      padding: 2.2rem 1.5rem;
       text-align: center;
-      position: relative;
       transition: all .3s;
+      background: rgba(242,244,245,.015);
+      position: relative;
+      overflow: hidden;
     }
+    .target-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--orange), var(--chili));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s;
+    }
+    .target-card:hover::before { transform: scaleX(1); }
     .target-card:hover {
-      border-color: var(--orange);
+      border-color: rgba(236,102,8,.25);
       background: rgba(236,102,8,.04);
+      transform: translateY(-3px);
     }
-    .target-card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .target-card .icon { font-size: 1.8rem; margin-bottom: .9rem; }
     .target-card h3 {
-      font-size: .95rem;
+      font-size: .85rem;
       font-weight: 700;
       color: var(--white);
       letter-spacing: .04em;
+      text-transform: uppercase;
     }
 
     /* ─── CTA SECTION ─── */
     #cta {
-      background: linear-gradient(135deg, #1a0a04 0%, #12100D 60%);
+      background: linear-gradient(135deg, #1c0a03 0%, #12100D 60%);
       text-align: center;
       position: relative;
       overflow: hidden;
     }
     .cta-glow {
       position: absolute;
-      width: 600px; height: 400px;
+      width: 700px; height: 500px;
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(236,102,8,.18) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(236,102,8,.16) 0%, transparent 70%);
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
+      animation: pulseGlow 7s ease-in-out infinite;
     }
-    #cta .section-title { max-width: 700px; margin: 0 auto 1.5rem; }
-    #cta .section-body { margin: 0 auto 2.5rem; text-align: center; }
-    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    #cta .section-title { max-width: 680px; margin: 0 auto 1.4rem; }
+    #cta .section-body { margin: 0 auto 2.8rem; text-align: center; }
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
 
     /* ─── CONTACT FORM ─── */
     #contact { background: #0e0c0a; }
     .contact-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 7rem;
       align-items: start;
     }
     .contact-info p {
       font-size: .92rem;
       font-weight: 300;
       color: var(--platinum);
-      line-height: 1.8;
-      margin-bottom: 2rem;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+      opacity: .8;
     }
     .contact-detail {
       display: flex;
       align-items: center;
-      gap: .8rem;
-      margin-bottom: 1rem;
+      gap: .9rem;
+      margin-bottom: 1.1rem;
     }
-    .contact-detail .icon {
-      font-size: 1rem;
-      color: var(--orange);
+    .contact-detail .icon-wrap {
+      width: 34px; height: 34px;
+      background: rgba(236,102,8,.1);
+      border: 1px solid rgba(236,102,8,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
     }
     .contact-detail span {
-      font-size: .88rem;
+      font-size: .85rem;
       color: var(--platinum);
       font-weight: 300;
     }
-    form { display: flex; flex-direction: column; gap: 1.2rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    form { display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .field-group { display: flex; flex-direction: column; gap: .4rem; }
     .field-group label {
-      font-size: .72rem;
+      font-size: .66rem;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--platinum);
-      opacity: .6;
+      opacity: .5;
     }
     .field-group input,
     .field-group select,
     .field-group textarea {
       background: rgba(242,244,245,.04);
-      border: 1px solid rgba(213,220,220,.12);
+      border: 1px solid rgba(213,220,220,.1);
       color: var(--white);
       padding: .85rem 1rem;
       font-family: 'Lato', sans-serif;
       font-size: .9rem;
       font-weight: 300;
       outline: none;
-      transition: border-color .25s;
+      transition: border-color .25s, background .25s;
       -webkit-appearance: none;
+      border-radius: 0;
     }
     .field-group input:focus,
     .field-group select:focus,
     .field-group textarea:focus {
       border-color: var(--orange);
+      background: rgba(236,102,8,.04);
     }
+    .field-group input::placeholder,
+    .field-group textarea::placeholder { color: rgba(213,220,220,.3); }
     .field-group select option { background: #1a1714; }
     .field-group textarea { resize: vertical; min-height: 120px; }
-    .form-submit { margin-top: .5rem; }
 
     /* ─── FOOTER ─── */
     footer {
-      background: #0a0908;
-      border-top: 1px solid rgba(213,220,220,.06);
-      padding: 3rem 5vw 2rem;
+      background: #090807;
+      border-top: 1px solid rgba(213,220,220,.05);
+      padding: 4rem 5vw 2rem;
     }
     .footer-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 3rem;
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
       flex-wrap: wrap;
     }
-    .footer-brand img { height: 32px; margin-bottom: 1rem; }
+    .footer-brand img { height: 30px; margin-bottom: 1.2rem; }
     .footer-brand p {
+      font-size: .78rem;
+      color: var(--platinum);
+      opacity: .38;
+      max-width: 240px;
+      line-height: 1.7;
+    }
+    .footer-links h4 {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.1rem;
+    }
+    .footer-links ul { list-style: none; }
+    .footer-links ul li { margin-bottom: .55rem; }
+    .footer-links ul a {
       font-size: .8rem;
       color: var(--platinum);
       opacity: .45;
-      max-width: 260px;
-      line-height: 1.6;
-    }
-    .footer-links h4 {
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 1rem;
-    }
-    .footer-links ul { list-style: none; }
-    .footer-links ul li { margin-bottom: .5rem; }
-    .footer-links ul a {
-      font-size: .82rem;
-      color: var(--platinum);
-      opacity: .55;
       text-decoration: none;
       transition: opacity .2s, color .2s;
     }
@@ -708,22 +935,22 @@
       gap: 1rem;
     }
     .footer-bottom p {
-      font-size: .75rem;
+      font-size: .72rem;
       color: var(--platinum);
-      opacity: .3;
+      opacity: .28;
     }
     .footer-badge {
-      font-size: .68rem;
+      font-size: .65rem;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--orange);
-      border: 1px solid rgba(236,102,8,.3);
-      padding: .3rem .8rem;
-      opacity: .7;
+      border: 1px solid rgba(236,102,8,.25);
+      padding: .3rem .85rem;
+      opacity: .6;
     }
 
-    /* ─── STICKY CTA (mobile) ─── */
+    /* ─── STICKY CTA ─── */
     .sticky-cta {
       display: none;
       position: fixed;
@@ -736,15 +963,15 @@
     .sticky-cta a {
       color: #fff;
       font-family: 'Lato', sans-serif;
-      font-size: .85rem;
+      font-size: .82rem;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       text-decoration: none;
     }
 
     /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       nav ul { display: none; }
       nav ul.open {
         display: flex;
@@ -754,32 +981,35 @@
         background: rgba(18,16,13,.97);
         padding: 1.5rem 5vw 2rem;
         gap: 1.2rem;
-        border-bottom: 1px solid rgba(213,220,220,.1);
+        border-bottom: 1px solid rgba(213,220,220,.08);
       }
       .burger { display: flex; }
       .problem-grid { grid-template-columns: 1fr; }
       .solution-layout { grid-template-columns: 1fr; gap: 3rem; }
-      .areas-grid { grid-template-columns: 1fr 1fr; }
-      .steps { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .areas-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
       .steps::before { display: none; }
       .why-grid { grid-template-columns: 1fr; }
       .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
       .form-row { grid-template-columns: 1fr; }
       .stat-sep { display: none; }
       .sticky-cta { display: block; }
-      #contact { padding-bottom: 80px; }
+      section { padding-bottom: 80px; }
+      .target-cards { flex-wrap: wrap; }
+      .target-card { min-width: 45%; }
     }
     @media (max-width: 600px) {
       .areas-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
-      .hero-content h1 { font-size: 2.2rem; }
+      .hero-content h1 { font-size: 2.4rem; }
+      section { padding: 70px 5vw; }
     }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
+<nav id="main-nav">
   <div class="logo">
     <a href="#hero"><img src="https://raw.githubusercontent.com/Estro-Agency/Carlo-Bortolotti/main/logo-bortolotti-white.png" alt="Studio Legale Bortolotti" /></a>
   </div>
@@ -799,11 +1029,24 @@
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-glow"></div>
+  <div class="hero-lines"></div>
   <div class="hero-ribbon"></div>
   <div class="hero-dots">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <!-- Scale watermark SVG -->
+  <div class="hero-watermark">
+    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="100" y1="10" x2="100" y2="150" stroke="white" stroke-width="2"/>
+      <line x1="20" y1="30" x2="180" y2="30" stroke="white" stroke-width="2"/>
+      <circle cx="20" cy="30" r="4" fill="white"/>
+      <circle cx="180" cy="30" r="4" fill="white"/>
+      <path d="M20 30 Q10 55 5 80 Q17 95 35 80 Q43 55 20 30Z" stroke="white" stroke-width="1.5" fill="none"/>
+      <path d="M180 30 Q190 55 195 80 Q183 95 165 80 Q157 55 180 30Z" stroke="white" stroke-width="1.5" fill="none"/>
+      <line x1="85" y1="145" x2="115" y2="145" stroke="white" stroke-width="2"/>
+    </svg>
   </div>
   <div class="hero-content">
     <span class="hero-tag">Studio Legale Bortolotti — AgiLex</span>
@@ -814,33 +1057,37 @@
       <a href="#how" class="btn-secondary">Scopri come funziona</a>
     </div>
   </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-hint-line"></div>
+  </div>
 </section>
 
 <!-- STATS BAR -->
 <div id="stats">
   <div class="stats-inner">
     <div class="stat-item">
-      <span class="stat-number">15+</span>
+      <span class="stat-number" data-target="15" data-suffix="+">0</span>
       <span class="stat-label">Anni di esperienza</span>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <span class="stat-number">200+</span>
+      <span class="stat-number" data-target="200" data-suffix="+">0</span>
       <span class="stat-label">Aziende seguite</span>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <span class="stat-number">8</span>
+      <span class="stat-number" data-target="8" data-suffix="">0</span>
       <span class="stat-label">Aree di pratica</span>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <span class="stat-number">48h</span>
+      <span class="stat-number" data-target="48" data-suffix="h">0</span>
       <span class="stat-label">Tempo di risposta</span>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <span class="stat-number">100%</span>
+      <span class="stat-number" data-target="100" data-suffix="%">0</span>
       <span class="stat-label">Focus imprese</span>
     </div>
   </div>
@@ -849,26 +1096,26 @@
 <!-- PROBLEM -->
 <section id="problem">
   <span class="section-tag">Il contesto</span>
-  <h2 class="section-title">Le aziende hanno bisogno di <em>più</em><br />di un avvocato d'emergenza.</h2>
+  <h2 class="section-title">Le aziende hanno bisogno di <em>più</em><br />di un avvocato d’emergenza.</h2>
   <div class="divider"></div>
   <p class="section-body">Le imprese moderne affrontano sfide legali continue. Aspettare che si manifesti un problema non è una strategia — è un rischio.</p>
   <div class="problem-grid">
-    <div class="problem-card">
+    <div class="problem-card reveal">
       <span class="problem-num">01</span>
       <h3>Contratti non presidiati</h3>
-      <p>Accordi commerciali, partnership e forniture firmati senza una revisione legale sistematica espongono l'azienda a clausole dannose.</p>
+      <p>Accordi commerciali, partnership e forniture firmati senza una revisione legale sistematica espongono l’azienda a clausole dannose.</p>
     </div>
-    <div class="problem-card">
+    <div class="problem-card reveal" style="transition-delay:.1s">
       <span class="problem-num">02</span>
       <h3>Compliance in continua evoluzione</h3>
       <p>GDPR, normative fiscali, sicurezza sul lavoro: il quadro regolatorio cambia rapidamente e non aspetta chi è impreparato.</p>
     </div>
-    <div class="problem-card">
+    <div class="problem-card reveal" style="transition-delay:.2s">
       <span class="problem-num">03</span>
       <h3>Consulenza frammentata e reattiva</h3>
       <p>Affidarsi a professionisti diversi per ogni esigenza crea lacune, incoerenze e costi imprevedibili.</p>
     </div>
-    <div class="problem-card">
+    <div class="problem-card reveal" style="transition-delay:.3s">
       <span class="problem-num">04</span>
       <h3>Decisioni strategiche senza presidio legale</h3>
       <p>Espansioni, acquisizioni, nuove linee di business: le scelte più importanti si prendono spesso senza una valutazione legale tempestiva.</p>
@@ -880,20 +1127,24 @@
 <section id="solution">
   <div class="solution-glow"></div>
   <div class="solution-layout">
-    <div class="solution-text">
+    <div class="solution-text reveal">
       <span class="section-tag">La soluzione</span>
       <h2 class="section-title">Un sistema legale<br /><em>operativo</em>,<br />non straordinario.</h2>
       <div class="divider"></div>
       <p class="section-body">AgiLex è il servizio di affiancamento legale continuativo di Studio Legale Bortolotti. Una presenza costante, strutturata e proattiva al fianco della tua impresa — non una voce di costo da attivare solo in caso di emergenza.</p>
       <br />
-      <p class="section-body">Presidio legale integrato, risposte rapide, visione strategica: tutto ciò di cui un'azienda moderna ha bisogno per crescere con sicurezza.</p>
-      <br />
-      <a href="#contact" class="btn-primary" style="margin-top:.5rem">Scopri il servizio</a>
+      <p class="section-body">Presidio legale integrato, risposte rapide, visione strategica: tutto ciò di cui un’azienda moderna ha bisogno per crescere con sicurezza.</p>
+      <br /><br />
+      <a href="#contact" class="btn-primary">Scopri il servizio</a>
     </div>
-    <div class="solution-visual">
+    <div class="solution-visual reveal" style="transition-delay:.15s">
       <div class="solution-box">
-        <p class="solution-quote">"La consulenza legale non dovrebbe essere una <strong>reazione</strong> agli eventi — dovrebbe essere la <strong>struttura portante</strong> del tuo modello di business."</p>
-        <p class="solution-author">— Carlo Bortolotti, Fondatore</p>
+        <div class="quote-mark">“</div>
+        <p class="solution-quote">La consulenza legale non dovrebbe essere una <strong>reazione</strong> agli eventi — dovrebbe essere la <strong>struttura portante</strong> del tuo modello di business.</p>
+        <div class="solution-author">
+          <div class="solution-author-line"></div>
+          <span>Carlo Bortolotti, Fondatore</span>
+        </div>
       </div>
     </div>
   </div>
@@ -905,71 +1156,39 @@
   <h2 class="section-title">Copertura legale <em>completa</em><br />per le imprese.</h2>
   <div class="divider"></div>
   <div class="areas-grid">
-    <div class="area-card">
-      <span class="area-icon">⚖️</span>
-      <h3>Diritto Societario</h3>
-      <p>Costituzione, governance, operazioni straordinarie e gestione delle strutture societarie.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">📄</span>
-      <h3>Contrattualistica</h3>
-      <p>Redazione, revisione e negoziazione di contratti commerciali, di fornitura e di distribuzione.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">🛡️</span>
-      <h3>Privacy & GDPR</h3>
-      <p>Compliance al Regolamento Europeo sulla protezione dei dati e consulenza continuativa.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">👥</span>
-      <h3>Diritto del Lavoro</h3>
-      <p>Gestione dei rapporti di lavoro, contratti, disciplina e contenzioso.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">💡</span>
-      <h3>Proprietà Intellettuale</h3>
-      <p>Tutela di marchi, brevetti, diritti d'autore e know-how aziendale.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">🏛️</span>
-      <h3>Contenzioso Civile</h3>
-      <p>Assistenza in giudizio e stragiudiziale per la tutela degli interessi aziendali.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">🔒</span>
-      <h3>D.Lgs. 231/2001</h3>
-      <p>Modelli organizzativi e di gestione per la prevenzione dei reati d'impresa.</p>
-    </div>
-    <div class="area-card">
-      <span class="area-icon">🌍</span>
-      <h3>Operazioni Internazionali</h3>
-      <p>Supporto legale per espansioni, joint venture e contratti cross-border.</p>
-    </div>
+    <div class="area-card reveal"><span class="area-icon">⚖️</span><h3>Diritto Societario</h3><p>Costituzione, governance, operazioni straordinarie e strutture societarie.</p></div>
+    <div class="area-card reveal" style="transition-delay:.08s"><span class="area-icon">📄</span><h3>Contrattualistica</h3><p>Redazione, revisione e negoziazione di contratti commerciali e di distribuzione.</p></div>
+    <div class="area-card reveal" style="transition-delay:.16s"><span class="area-icon">🛡️</span><h3>Privacy & GDPR</h3><p>Compliance al Regolamento Europeo e consulenza continuativa sulla protezione dei dati.</p></div>
+    <div class="area-card reveal" style="transition-delay:.24s"><span class="area-icon">👥</span><h3>Diritto del Lavoro</h3><p>Gestione dei rapporti di lavoro, contratti, disciplina e contenzioso.</p></div>
+    <div class="area-card reveal" style="transition-delay:.08s"><span class="area-icon">💡</span><h3>Proprietà Intellettuale</h3><p>Tutela di marchi, brevetti, diritti d’autore e know-how aziendale.</p></div>
+    <div class="area-card reveal" style="transition-delay:.16s"><span class="area-icon">🏛️</span><h3>Contenzioso Civile</h3><p>Assistenza in giudizio e stragiudiziale per la tutela degli interessi aziendali.</p></div>
+    <div class="area-card reveal" style="transition-delay:.24s"><span class="area-icon">🔒</span><h3>D.Lgs. 231/2001</h3><p>Modelli organizzativi per la prevenzione dei reati d’impresa.</p></div>
+    <div class="area-card reveal" style="transition-delay:.32s"><span class="area-icon">🌍</span><h3>Operazioni Internazionali</h3><p>Supporto per espansioni, joint venture e contratti cross-border.</p></div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section id="how">
   <span class="section-tag">Come funziona</span>
-  <h2 class="section-title">Quattro passi verso<br />un'azienda <em>legalmente solida</em>.</h2>
+  <h2 class="section-title">Quattro passi verso<br />un’azienda <em>legalmente solida</em>.</h2>
   <div class="divider"></div>
   <div class="steps">
-    <div class="step">
+    <div class="step reveal">
       <div class="step-num">01</div>
       <h3>Analisi iniziale</h3>
       <p>Un incontro conoscitivo per mappare la struttura legale della tua azienda e identificare le priorità.</p>
     </div>
-    <div class="step">
+    <div class="step reveal" style="transition-delay:.1s">
       <div class="step-num">02</div>
       <h3>Piano di presidio</h3>
       <p>Definiamo insieme il perimetro di copertura, le modalità operative e i tempi di risposta garantiti.</p>
     </div>
-    <div class="step">
+    <div class="step reveal" style="transition-delay:.2s">
       <div class="step-num">03</div>
       <h3>Attivazione AgiLex</h3>
       <p>Il servizio entra a regime: accesso diretto al team, reportistica periodica, revisione contratti.</p>
     </div>
-    <div class="step">
+    <div class="step reveal" style="transition-delay:.3s">
       <div class="step-num">04</div>
       <h3>Affiancamento continuo</h3>
       <p>Monitoriamo evoluzioni normative e anticipiamo i rischi, adattando il presidio alla crescita della tua impresa.</p>
@@ -981,50 +1200,32 @@
 <section id="why">
   <div class="why-watermark">LEX</div>
   <span class="section-tag">Perché AgiLex</span>
-  <h2 class="section-title">L'autorevolezza di uno studio storico.<br />La <em>velocità</em> di un partner moderno.</h2>
+  <h2 class="section-title">L’autorevolezza di uno studio storico.<br />La <em>velocità</em> di un partner moderno.</h2>
   <div class="divider"></div>
   <div class="why-grid">
-    <div class="why-item">
+    <div class="why-item reveal">
       <div class="why-icon">⚡</div>
-      <div>
-        <h3>Risposta garantita in 48 ore</h3>
-        <p>Ogni richiesta riceve una risposta qualificata entro due giorni lavorativi. Nessuna attesa, nessuna incertezza.</p>
-      </div>
+      <div><h3>Risposta garantita in 48 ore</h3><p>Ogni richiesta riceve una risposta qualificata entro due giorni lavorativi. Nessuna attesa, nessuna incertezza.</p></div>
     </div>
-    <div class="why-item">
+    <div class="why-item reveal" style="transition-delay:.08s">
       <div class="why-icon">🎯</div>
-      <div>
-        <h3>Focus esclusivo sulle imprese</h3>
-        <p>AgiLex è progettato per le aziende, non per i privati. Comprendiamo le logiche e le pressioni del business.</p>
-      </div>
+      <div><h3>Focus esclusivo sulle imprese</h3><p>AgiLex è progettato per le aziende, non per i privati. Comprendiamo le logiche e le pressioni del business.</p></div>
     </div>
-    <div class="why-item">
+    <div class="why-item reveal" style="transition-delay:.16s">
       <div class="why-icon">📊</div>
-      <div>
-        <h3>Costo prevedibile e trasparente</h3>
-        <p>Abbonamento mensile fisso. Niente sorprese in fattura. La consulenza legale diventa un costo di struttura gestibile.</p>
-      </div>
+      <div><h3>Costo prevedibile e trasparente</h3><p>Abbonamento mensile fisso. Niente sorprese in fattura. La consulenza legale diventa un costo di struttura gestibile.</p></div>
     </div>
-    <div class="why-item">
+    <div class="why-item reveal" style="transition-delay:.24s">
       <div class="why-icon">🔗</div>
-      <div>
-        <h3>Integrazione con il tuo team</h3>
-        <p>Operiamo come un ufficio legale interno, in coordinamento con CFO, CEO e management, non in isolamento.</p>
-      </div>
+      <div><h3>Integrazione con il tuo team</h3><p>Operiamo come un ufficio legale interno, in coordinamento con CFO, CEO e management.</p></div>
     </div>
-    <div class="why-item">
+    <div class="why-item reveal" style="transition-delay:.16s">
       <div class="why-icon">🧭</div>
-      <div>
-        <h3>Visione strategica, non solo operativa</h3>
-        <p>Non ci limitiamo a rispondere alle domande: anticipiamo i rischi e contribuiamo alle decisioni di business.</p>
-      </div>
+      <div><h3>Visione strategica, non solo operativa</h3><p>Non ci limitiamo a rispondere alle domande: anticipiamo i rischi e contribuiamo alle decisioni di business.</p></div>
     </div>
-    <div class="why-item">
+    <div class="why-item reveal" style="transition-delay:.24s">
       <div class="why-icon">🏆</div>
-      <div>
-        <h3>Esperienza consolidata</h3>
-        <p>Oltre 15 anni al servizio di PMI e grandi aziende in molteplici settori. Esperienza che fa la differenza.</p>
-      </div>
+      <div><h3>Esperienza consolidata</h3><p>Oltre 15 anni al servizio di PMI e grandi aziende in molteplici settori. Esperienza che fa la differenza.</p></div>
     </div>
   </div>
 </section>
@@ -1035,36 +1236,21 @@
   <h2 class="section-title">AgiLex è pensato per<br />chi fa <em>sul serio</em>.</h2>
   <div class="divider"></div>
   <p class="section-body">Il servizio è ideale per imprese strutturate che vogliono un presidio legale costante senza la complessità di un ufficio legale interno.</p>
-  <div class="target-cards">
-    <div class="target-card">
-      <div class="icon">🏭</div>
-      <h3>PMI in crescita</h3>
-    </div>
-    <div class="target-card">
-      <div class="icon">🚀</div>
-      <h3>Startup scale-up</h3>
-    </div>
-    <div class="target-card">
-      <div class="icon">🌐</div>
-      <h3>Aziende internazionali</h3>
-    </div>
-    <div class="target-card">
-      <div class="icon">🏢</div>
-      <h3>Holding e gruppi</h3>
-    </div>
-    <div class="target-card">
-      <div class="icon">💼</div>
-      <h3>Imprenditori seriali</h3>
-    </div>
+  <div class="target-cards" style="margin-top:3rem">
+    <div class="target-card reveal"><div class="icon">🏭</div><h3>PMI in crescita</h3></div>
+    <div class="target-card reveal" style="transition-delay:.08s"><div class="icon">🚀</div><h3>Startup scale-up</h3></div>
+    <div class="target-card reveal" style="transition-delay:.16s"><div class="icon">🌐</div><h3>Aziende internazionali</h3></div>
+    <div class="target-card reveal" style="transition-delay:.24s"><div class="icon">🏢</div><h3>Holding e gruppi</h3></div>
+    <div class="target-card reveal" style="transition-delay:.32s"><div class="icon">💼</div><h3>Imprenditori seriali</h3></div>
   </div>
 </section>
 
 <!-- CTA SECTION -->
 <section id="cta">
   <div class="cta-glow"></div>
-  <span class="section-tag" style="text-align:center;display:block">Inizia oggi</span>
+  <span class="section-tag" style="display:block;text-align:center">Inizia oggi</span>
   <h2 class="section-title" style="text-align:center">Trasforma la consulenza legale<br />in un <em>vantaggio competitivo</em>.</h2>
-  <p class="section-body" style="text-align:center">Un primo incontro conoscitivo, senza impegno. Analizziamo insieme la struttura legale della tua azienda e ti mostriamo come AgiLex può integrarsi nel tuo operativo.</p>
+  <p class="section-body" style="margin:0 auto 2.8rem;text-align:center">Un primo incontro conoscitivo, senza impegno. Analizziamo insieme la struttura legale della tua azienda e ti mostriamo come AgiLex può integrarsi nel tuo operativo.</p>
   <div class="cta-actions">
     <a href="#contact" class="btn-primary">Richiedi una consulenza gratuita</a>
     <a href="#how" class="btn-secondary">Scopri come funziona</a>
@@ -1074,54 +1260,39 @@
 <!-- CONTACT FORM -->
 <section id="contact">
   <div class="contact-layout">
-    <div class="contact-info">
+    <div class="contact-info reveal">
       <span class="section-tag">Contatti</span>
-      <h2 class="section-title">Parlaci della<br />tua <em>azienda</em>.</h2>
+      <h2 class="section-title">Parliamo della<br />tua <em>azienda</em>.</h2>
       <div class="divider"></div>
-      <p>Compila il modulo per richiedere un primo incontro conoscitivo. Il nostro team ti contatterà entro 48 ore lavorative per fissare un appuntamento.</p>
+      <p>Compila il modulo per richiedere un primo incontro conoscitivo. Il nostro team ti contatterà entro 48 ore lavorative.</p>
       <div class="contact-detail">
-        <span class="icon">📍</span>
+        <div class="icon-wrap">📍</div>
         <span>Studio Legale Bortolotti, Italia</span>
       </div>
       <div class="contact-detail">
-        <span class="icon">✉️</span>
+        <div class="icon-wrap">✉️</div>
         <span>info@studiobortolotti.it</span>
       </div>
       <div class="contact-detail">
-        <span class="icon">📞</span>
+        <div class="icon-wrap">📞</div>
         <span>+39 02 0000 0000</span>
       </div>
     </div>
-    <div class="contact-form">
+    <div class="reveal" style="transition-delay:.15s">
       <form onsubmit="handleSubmit(event)">
         <div class="form-row">
-          <div class="field-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" placeholder="Mario" required />
-          </div>
-          <div class="field-group">
-            <label for="cognome">Cognome</label>
-            <input type="text" id="cognome" name="cognome" placeholder="Rossi" required />
-          </div>
+          <div class="field-group"><label for="nome">Nome</label><input type="text" id="nome" placeholder="Mario" required /></div>
+          <div class="field-group"><label for="cognome">Cognome</label><input type="text" id="cognome" placeholder="Rossi" required /></div>
         </div>
-        <div class="field-group">
-          <label for="azienda">Azienda</label>
-          <input type="text" id="azienda" name="azienda" placeholder="Nome della tua azienda" required />
-        </div>
+        <div class="field-group"><label for="azienda">Azienda</label><input type="text" id="azienda" placeholder="Nome della tua azienda" required /></div>
         <div class="form-row">
-          <div class="field-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="mario@azienda.it" required />
-          </div>
-          <div class="field-group">
-            <label for="telefono">Telefono</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="+39 02 000000" />
-          </div>
+          <div class="field-group"><label for="email">Email</label><input type="email" id="email" placeholder="mario@azienda.it" required /></div>
+          <div class="field-group"><label for="telefono">Telefono</label><input type="tel" id="telefono" placeholder="+39 02 000000" /></div>
         </div>
         <div class="field-group">
           <label for="area">Area di interesse principale</label>
-          <select id="area" name="area">
-            <option value="">Seleziona un'area</option>
+          <select id="area">
+            <option value="">Seleziona un’area</option>
             <option>Diritto Societario</option>
             <option>Contrattualistica</option>
             <option>Privacy & GDPR</option>
@@ -1132,13 +1303,8 @@
             <option>Altro / Non so ancora</option>
           </select>
         </div>
-        <div class="field-group">
-          <label for="messaggio">Messaggio</label>
-          <textarea id="messaggio" name="messaggio" placeholder="Descrivi brevemente la situazione della tua azienda e le tue esigenze legali..."></textarea>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn-primary" style="width:100%;justify-content:center">Invia la richiesta</button>
-        </div>
+        <div class="field-group"><label for="messaggio">Messaggio</label><textarea id="messaggio" placeholder="Descrivi brevemente la situazione della tua azienda e le tue esigenze legali..."></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:.4rem">Invia la richiesta</button>
       </form>
     </div>
   </div>
@@ -1182,35 +1348,78 @@
 </div>
 
 <script>
+  // Nav scroll behavior
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Burger menu
   function toggleMenu() {
     const menu = document.getElementById('nav-menu');
+    const burger = document.getElementById('burger');
     menu.classList.toggle('open');
+    burger.classList.toggle('open');
+  }
+  document.getElementById('nav-menu').querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('nav-menu').classList.remove('open');
+      document.getElementById('burger').classList.remove('open');
+    });
+  });
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const step = 16;
+    const totalSteps = duration / step;
+    let current = 0;
+    const increment = target / totalSteps;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        el.textContent = target + suffix;
+        clearInterval(timer);
+      } else {
+        el.textContent = Math.floor(current) + suffix;
+      }
+    }, step);
   }
 
+  // Intersection observer for reveal + counters
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-number[data-target]').forEach(animateCounter);
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statsObserver.observe(document.getElementById('stats'));
+
+  // Form submit
   function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('[type=submit]');
     btn.textContent = 'Richiesta inviata ✓';
     btn.style.background = '#92152A';
+    btn.style.boxShadow = 'none';
     btn.disabled = true;
   }
-
-  // Fade-in on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.problem-card, .area-card, .step, .why-item, .target-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity .5s ease, transform .5s ease';
-    observer.observe(el);
-  });
 </script>
 </body>
 </html>
