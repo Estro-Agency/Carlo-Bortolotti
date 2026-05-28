@@ -82,8 +82,10 @@
     .btn-g-dk:hover { background:var(--ink); color:#fff; }
 
     /* ─── FADE-UP ─────────────────────────────────────────────── */
-    .fu { opacity:0; transform:translateY(22px); transition:opacity .5s ease, transform .5s ease; }
-    .fu.in { opacity:1; transform:none; }
+    /* Default visible — JS adds js-ready to enable animation */
+    .fu { opacity:1; transform:none; }
+    .js-ready .fu { opacity:0; transform:translateY(22px); transition:opacity .5s ease, transform .5s ease; }
+    .js-ready .fu.in { opacity:1; transform:none; }
     .sg .fu:nth-child(1){transition-delay:0s}
     .sg .fu:nth-child(2){transition-delay:.07s}
     .sg .fu:nth-child(3){transition-delay:.14s}
@@ -930,11 +932,14 @@
     mm.classList.remove('open'); burg.setAttribute('aria-expanded','false');
   }));
 
-  // Fade-up observer
+  // Fade-up observer — enable only after JS confirmed running
+  document.documentElement.classList.add('js-ready');
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.05 });
   document.querySelectorAll('.fu').forEach(el => io.observe(el));
+  // Fallback: reveal everything after 2.5s in case observer doesn't fire
+  setTimeout(() => document.querySelectorAll('.fu').forEach(el => el.classList.add('in')), 2500);
 
   // Form submit
   document.getElementById('cForm').addEventListener('submit', function(e){
