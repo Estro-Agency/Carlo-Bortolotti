@@ -217,7 +217,7 @@
       transition:background .22s;
     }
     .pc:hover { background:var(--ink3); }
-    .pc-icon { width:42px; height:42px; border-radius:50%; background:var(--or); color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .pc-icon { width:28px; height:28px; color:var(--or); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
     .pc h3 { font-size:.9rem; margin-bottom:.3rem; color:#fff; }
     .pc p  { font-size:.82rem; line-height:1.55; color:rgba(255,255,255,.45); }
 
@@ -270,7 +270,7 @@
       transition:background .22s;
     }
     .ac:hover { background:var(--ink3); }
-    .ai { width:52px; height:52px; border-radius:50%; background:var(--or); color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ai { width:32px; height:32px; color:var(--or); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .ac h3 { font-size:.86rem; font-weight:700; line-height:1.4; color:rgba(255,255,255,.85); }
 
     /* ══════════════════════════════════════════════════════════
@@ -291,7 +291,7 @@
     .cf-steps { display:flex; flex-direction:column; }
     .cfs { display:flex; gap:1.4rem; align-items:flex-start; padding:1.7rem 0; border-bottom:1px solid rgba(255,255,255,.06); }
     .cfs:last-child { border-bottom:none; }
-    .cfs-n { width:46px; height:46px; border-radius:50%; background:var(--or); color:#fff; font-weight:900; font-size:1.05rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .cfs-n { width:32px; font-size:1.6rem; font-weight:900; color:var(--or); flex-shrink:0; line-height:1; padding-top:2px; }
     .cfs h3 { font-size:.93rem; margin-bottom:.3rem; color:#fff; }
     .cfs p  { font-size:.83rem; color:rgba(255,255,255,.45); }
     @media(max-width:900px){ #cf{grid-template-columns:1fr} }
@@ -307,7 +307,7 @@
     .diff-list { display:flex; flex-direction:column; }
     .di { display:flex; gap:1.2rem; align-items:flex-start; padding:1.6rem 0; border-bottom:1px solid rgba(255,255,255,.06); }
     .di:last-child { border-bottom:none; padding-bottom:0; }
-    .di-n { width:38px; height:38px; border-radius:50%; background:var(--or); color:#fff; font-weight:900; font-size:.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .di-n { width:28px; font-size:1.3rem; font-weight:900; color:var(--or); opacity:.55; flex-shrink:0; line-height:1; padding-top:3px; }
     .di h3 { font-size:.92rem; margin-bottom:.3rem; color:#fff; }
     .di h3 .hl { color:var(--or); }
     .di p  { font-size:.83rem; color:rgba(255,255,255,.45); }
@@ -477,18 +477,18 @@
 <section id="hero">
   <div class="hero-or rel">
 
-    <!-- Ribbon VI — white on gradient -->
+    <!-- Ribbon VI — white calligraphic on gradient -->
     <div class="ribbon-wrap" aria-hidden="true">
       <svg viewBox="0 0 1440 520" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-        <path d="M -100,480
-                 C 80,360 160,80 340,55
-                 C 490,35 570,160 548,285
-                 C 526,410 415,468 285,435
-                 C 158,402 118,278 182,185
-                 C 248,92 390,72 548,95
-                 C 740,122 960,55 1260,10
-                 C 1340,0 1400,-4 1500,5"
-              stroke="rgba(255,255,255,0.14)" stroke-width="90" stroke-linecap="round"/>
+        <path d="M 60,460
+                 C 100,400 150,320 195,290
+                 C 240,260 290,265 315,295
+                 C 340,325 328,375 298,388
+                 C 268,401 230,382 225,355
+                 C 220,328 248,308 285,318
+                 C 380,348 600,288 920,205
+                 C 1120,150 1300,115 1500,82"
+              stroke="rgba(255,255,255,0.22)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
 
@@ -580,18 +580,18 @@
 <!-- ══ PROBLEMA ═══════════════════════════════════════════════ -->
 <section id="problema" class="rel">
 
-  <!-- Ribbon VI — orange on dark -->
+  <!-- Ribbon VI — orange calligraphic on dark -->
   <div class="ribbon-wrap" aria-hidden="true">
     <svg viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-      <path d="M 1540,550
-               C 1360,430 1280,150 1100,120
-               C 950,95 870,215 892,340
-               C 914,465 1025,523 1155,490
-               C 1282,457 1322,333 1258,240
-               C 1192,147 1050,127 892,150
-               C 700,177 480,110 180,60
-               C 100,48 40,43 -60,52"
-            stroke="rgba(236,102,8,0.06)" stroke-width="100" stroke-linecap="round"/>
+      <path d="M 1380,540
+               C 1340,478 1290,400 1248,368
+               C 1206,336 1156,342 1130,372
+               C 1104,402 1116,452 1146,465
+               C 1176,478 1214,458 1218,432
+               C 1222,406 1196,386 1158,396
+               C 1062,428 842,368 542,288
+               C 342,233 142,198 -60,168"
+            stroke="rgba(236,102,8,0.4)" stroke-width="2" stroke-linecap="round" fill="none"/>
     </svg>
   </div>
 
@@ -601,13 +601,13 @@
     <p>Ogni giorno le imprese affrontano situazioni legali che richiedono risposte immediate. Senza un avvocato di riferimento, ogni problema diventa un'emergenza costosa.</p>
   </div>
   <div class="prob-grid sg">
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><h3>Contratti da revisionare</h3><p>Firmare senza leggere bene può costare caro. Ogni accordo nasconde rischi che solo un esperto sa individuare prima.</p></div></div>
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><h3>Clienti o fornitori problematici</h3><p>Inadempienze, contestazioni, ritardi nei pagamenti: gestire rapporti commerciali richiede supporto legale costante.</p></div></div>
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div><h3>Dipendenti e controversie di lavoro</h3><p>Licenziamenti, contratti, infortuni: il diritto del lavoro è un campo minato senza un avvocato dedicato.</p></div></div>
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h3>Recupero crediti</h3><p>Fatture non pagate, debitori irreperibili: ogni euro non riscosso è una perdita diretta per la tua azienda.</p></div></div>
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><h3>Rischi legali sottovalutati</h3><p>Molti problemi nascono da situazioni che sembravano irrilevanti. Prevenire è sempre più economico che rimediare.</p></div></div>
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><h3>Costi legali imprevedibili</h3><p>Parcelle a consumo e tariffe orarie non chiarite: pianificare il budget aziendale diventa impossibile.</p></div></div>
-    <div class="pc fu"><div class="pc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><h3>Nessun referente legale stabile</h3><p>Ogni volta da zero, ogni volta un avvocato diverso: perdita di tempo, contesto e di efficacia operativa.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><h3>Contratti da revisionare</h3><p>Firmare senza leggere bene può costare caro. Ogni accordo nasconde rischi che solo un esperto sa individuare prima.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><h3>Clienti o fornitori problematici</h3><p>Inadempienze, contestazioni, ritardi nei pagamenti: gestire rapporti commerciali richiede supporto legale costante.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div><h3>Dipendenti e controversie di lavoro</h3><p>Licenziamenti, contratti, infortuni: il diritto del lavoro è un campo minato senza un avvocato dedicato.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h3>Recupero crediti</h3><p>Fatture non pagate, debitori irreperibili: ogni euro non riscosso è una perdita diretta per la tua azienda.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><h3>Rischi legali sottovalutati</h3><p>Molti problemi nascono da situazioni che sembravano irrilevanti. Prevenire è sempre più economico che rimediare.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><h3>Costi legali imprevedibili</h3><p>Parcelle a consumo e tariffe orarie non chiarite: pianificare il budget aziendale diventa impossibile.</p></div></div>
+    <div class="pc fu"><div class="pc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><h3>Nessun referente legale stabile</h3><p>Ogni volta da zero, ogni volta un avvocato diverso: perdita di tempo, contesto e di efficacia operativa.</p></div></div>
   </div>
 </section>
 
@@ -617,11 +617,17 @@
 <!-- ══ SOLUZIONE ══════════════════════════════════════════════ -->
 <section id="soluzione">
   <div class="sol-or rel">
-    <!-- Ribbon piccola su arancio -->
+    <!-- Ribbon calligraphic su arancio -->
     <div class="ribbon-wrap" aria-hidden="true">
       <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-        <path d="M -60,600 C 0,480 20,200 120,140 C 200,90 260,150 250,230 C 240,310 180,350 110,320 C 40,290 20,200 80,150 C 140,100 240,90 360,60 C 420,45 460,40 500,35"
-              stroke="rgba(255,255,255,0.12)" stroke-width="65" stroke-linecap="round"/>
+        <path d="M 30,560
+                 C 55,500 75,420 100,385
+                 C 125,350 158,348 175,372
+                 C 192,396 183,438 158,448
+                 C 133,458 105,440 103,418
+                 C 101,396 124,380 155,388
+                 C 210,406 290,370 380,330"
+              stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
     <span class="label fu">La soluzione</span>
@@ -644,18 +650,18 @@
 <!-- ══ AREE ═══════════════════════════════════════════════════ -->
 <section id="aree" class="rel">
 
-  <!-- Ribbon VI — su sfondo scuro -->
+  <!-- Ribbon calligraphic su sfondo scuro -->
   <div class="ribbon-wrap" aria-hidden="true">
     <svg viewBox="0 0 1440 500" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-      <path d="M -80,460
-               C 100,340 180,60 360,35
-               C 510,15 590,135 568,260
-               C 546,385 435,443 305,410
-               C 178,377 138,253 202,160
-               C 268,67 410,47 568,70
-               C 760,97 980,30 1280,-15
-               C 1360,-27 1420,-31 1520,-22"
-            stroke="rgba(236,102,8,0.07)" stroke-width="100" stroke-linecap="round"/>
+      <path d="M 65,455
+               C 108,393 160,315 205,283
+               C 250,251 300,258 324,288
+               C 348,318 336,368 306,381
+               C 276,394 238,375 234,348
+               C 230,321 258,301 294,311
+               C 388,341 610,281 930,198
+               C 1130,143 1310,108 1510,75"
+            stroke="rgba(236,102,8,0.35)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
     </svg>
   </div>
 
@@ -665,15 +671,15 @@
     <p>Lo Studio Legale Bortolotti mette a disposizione avvocati d'impresa in grado di offrire assistenza in tutte le principali aree del diritto civile e commerciale.</p>
   </div>
   <div class="aree-grid sg">
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3>Diritto civile e contrattualistica di ogni tipo</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Responsabilità civile e risarcimento del danno</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Recupero crediti ed esecuzioni</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h3>Diritto bancario ed assicurativo</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="2" x2="22" y2="6"/><path d="M7.5 20.5L19 9l-4-4L3.5 16.5 2 22z"/></svg></div><h3>Diritto commerciale e societario</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Diritto immobiliare e locazioni</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>E-commerce, licenze, distribuzione e diritto dei trasporti</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m-2.83-2.82a10 10 0 0 0 0 14.14"/></svg></div><h3>Marchi, brevetti e proprietà intellettuale</h3></div>
-    <div class="ac fu"><div class="ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Diritto del lavoro</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3>Diritto civile e contrattualistica di ogni tipo</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Responsabilità civile e risarcimento del danno</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Recupero crediti ed esecuzioni</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h3>Diritto bancario ed assicurativo</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="2" x2="22" y2="6"/><path d="M7.5 20.5L19 9l-4-4L3.5 16.5 2 22z"/></svg></div><h3>Diritto commerciale e societario</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Diritto immobiliare e locazioni</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>E-commerce, licenze, distribuzione e diritto dei trasporti</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m-2.83-2.82a10 10 0 0 0 0 14.14"/></svg></div><h3>Marchi, brevetti e proprietà intellettuale</h3></div>
+    <div class="ac fu"><div class="ai"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Diritto del lavoro</h3></div>
   </div>
 </section>
 
@@ -683,11 +689,17 @@
 <!-- ══ COME FUNZIONA ══════════════════════════════════════════ -->
 <section id="cf">
   <div class="cf-or rel">
-    <!-- Ribbon su arancio -->
+    <!-- Ribbon calligraphic su arancio -->
     <div class="ribbon-wrap" aria-hidden="true">
       <svg viewBox="0 0 380 600" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-        <path d="M -50,580 C 10,460 30,180 130,120 C 210,70 270,130 260,210 C 250,290 190,330 120,300 C 50,270 30,180 90,130 C 150,80 250,70 370,40 C 430,25 470,20 510,15"
-              stroke="rgba(255,255,255,0.11)" stroke-width="60" stroke-linecap="round"/>
+        <path d="M 25,545
+                 C 50,485 72,405 97,370
+                 C 122,335 155,334 172,358
+                 C 189,382 180,424 155,434
+                 C 130,444 102,426 100,404
+                 C 98,382 122,366 152,374
+                 C 210,392 290,355 380,315"
+              stroke="rgba(255,255,255,0.26)" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
     <p class="eyebrow fu" style="font-size:.67rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.7rem;">Come funziona</p>
@@ -709,11 +721,18 @@
 <!-- ══ DIFFERENZIANTI ═════════════════════════════════════════ -->
 <section id="diff">
   <div class="diff-dk rel">
-    <!-- Ribbon tenue su dark -->
+    <!-- Ribbon calligraphic su dark -->
     <div class="ribbon-wrap" aria-hidden="true">
       <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-        <path d="M -60,660 C 80,540 140,260 300,220 C 430,188 500,280 484,370 C 468,460 385,505 285,480 C 185,455 148,358 200,280 C 252,202 370,185 500,205 C 660,230 820,175 980,130 C 1040,113 1090,108 1160,100"
-              stroke="rgba(236,102,8,0.05)" stroke-width="90" stroke-linecap="round"/>
+        <path d="M 40,645
+                 C 80,583 130,503 175,468
+                 C 220,433 268,438 292,468
+                 C 316,498 305,548 276,560
+                 C 247,572 210,553 207,527
+                 C 204,501 230,482 264,490
+                 C 354,518 520,462 720,398
+                 C 820,365 910,342 1000,322"
+              stroke="rgba(236,102,8,0.32)" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
     <span class="label fu">Perché scegliere AgiLex</span>
@@ -727,11 +746,17 @@
     </div>
   </div>
   <div class="diff-or rel">
-    <!-- Ribbon su arancio -->
+    <!-- Ribbon calligraphic su arancio -->
     <div class="ribbon-wrap" aria-hidden="true">
       <svg viewBox="0 0 380 700" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-        <path d="M 450,680 C 390,560 370,280 270,220 C 190,170 130,230 140,310 C 150,390 210,430 280,400 C 350,370 370,280 310,210 C 250,140 150,130 30,100 C -30,83 -70,78 -150,70"
-              stroke="rgba(255,255,255,0.11)" stroke-width="65" stroke-linecap="round"/>
+        <path d="M 355,660
+                 C 330,600 308,520 283,485
+                 C 258,450 225,450 208,474
+                 C 191,498 200,540 225,550
+                 C 250,560 278,542 280,520
+                 C 282,498 258,480 228,487
+                 C 170,505 92,468 0,430"
+              stroke="rgba(255,255,255,0.26)" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
     <p class="perche fu" style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:700;color:rgba(255,255,255,.9);line-height:1.2;margin-bottom:.35rem;">Perché scegliere</p>
@@ -745,18 +770,18 @@
 <!-- ══ TARGET ═════════════════════════════════════════════════ -->
 <section id="target" class="rel">
 
-  <!-- Ribbon leggera su dark -->
+  <!-- Ribbon calligraphic su dark -->
   <div class="ribbon-wrap" aria-hidden="true">
     <svg viewBox="0 0 1440 500" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-      <path d="M 1540,460
-               C 1360,340 1280,60 1100,35
-               C 950,15 870,135 892,260
-               C 914,385 1025,443 1155,410
-               C 1282,377 1322,253 1258,160
-               C 1192,67 1050,47 892,70
-               C 700,97 480,30 180,-15
-               C 100,-27 40,-31 -60,-22"
-            stroke="rgba(236,102,8,0.05)" stroke-width="90" stroke-linecap="round"/>
+      <path d="M 1375,442
+               C 1335,380 1285,302 1240,270
+               C 1195,238 1145,244 1119,274
+               C 1093,304 1104,354 1134,366
+               C 1164,378 1202,360 1205,334
+               C 1208,308 1183,288 1146,297
+               C 1050,326 830,266 530,184
+               C 330,129 130,94 -70,61"
+            stroke="rgba(236,102,8,0.32)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
     </svg>
   </div>
 
@@ -781,18 +806,18 @@
 <!-- ══ CTA MID ════════════════════════════════════════════════ -->
 <section id="ctamid" class="rel">
 
-  <!-- Ribbon grande — su gradient orange -->
+  <!-- Ribbon calligraphic su gradient orange -->
   <div class="ribbon-wrap" aria-hidden="true">
     <svg viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="xMidYMid slice">
-      <path d="M -100,380
-               C 80,260 160,-20 340,-45
-               C 490,-65 570,55 548,180
-               C 526,305 415,363 285,330
-               C 158,297 118,173 182,80
-               C 248,-13 390,-33 548,-10
-               C 740,17 960,-50 1260,-95
-               C 1340,-107 1400,-111 1500,-102"
-            stroke="rgba(255,255,255,0.12)" stroke-width="80" stroke-linecap="round"/>
+      <path d="M 62,368
+               C 102,308 154,230 198,198
+               C 242,166 290,172 314,202
+               C 338,232 327,282 298,294
+               C 269,306 232,288 229,262
+               C 226,236 252,218 287,227
+               C 378,255 600,196 920,113
+               C 1120,58 1310,24 1510,-10"
+            stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round" fill="none"/>
     </svg>
   </div>
 
